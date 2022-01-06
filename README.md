@@ -28,8 +28,8 @@ This plugin implements support for dual-pane navigation into xplr.
   -- Or
 
   require("dual-pane").setup{
-    active_pane_width = { Percentage = 70 }
-    inactive_pane_width = { Percentage = 30 }
+    active_pane_width = { Percentage = 70 },
+    inactive_pane_width = { Percentage = 30 },
   }
 
   ```
