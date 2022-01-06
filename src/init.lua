@@ -119,7 +119,11 @@ local function activate_pane(pane_, layout, ctx)
   end
 end
 
-local function setup()
+local function setup(args)
+  args = args or {}
+  args.active_pane_width = args.active_pane_width or { Percentage = 70 }
+  args.inactive_pane_width = args.inactive_pane_width or { Percentage = 30 }
+
   local on_key = xplr.config.modes.builtin.switch_layout.key_bindings.on_key
 
   on_key.h = {
@@ -144,16 +148,16 @@ local function setup()
   local default_layout = xplr.config.layouts.builtin.default
   xplr.config.layouts.custom.left_pane_active = split_pane(
     default_layout,
-    { Percentage = 70 },
-    { Percentage = 30 },
+    args.active_pane_width,
+    args.inactive_pane_width,
     "Table",
     inactive_pane_layout
   )
 
   xplr.config.layouts.custom.right_pane_active = split_pane(
     default_layout,
-    { Percentage = 30 },
-    { Percentage = 70 },
+    args.inactive_pane_width,
+    args.active_pane_width,
     inactive_pane_layout,
     "Table"
   )

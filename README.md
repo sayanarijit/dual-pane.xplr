@@ -1,17 +1,8 @@
-xplr plugin template
-====================
+[![dual-pane.gif](https://s10.gifyu.com/images/dual-pane.gif)](https://gifyu.com/image/SSyuk)
 
-Use this template to [write your own xplr plugin](https://arijitbasu.in/xplr/en/writing-plugins.html).
+This plugin implements support for dual-pane navigation into xplr.
 
-
-Requirements
-------------
-
-- Some tool
-
-
-Installation
-------------
+## Installation
 
 ### Install manually
 
@@ -26,26 +17,30 @@ Installation
   ```bash
   mkdir -p ~/.config/xplr/plugins
 
-  git clone https://github.com/me/{plugin}.xplr ~/.config/xplr/plugins/{plugin}
+  git clone https://github.com/me/dual-pane.xplr ~/.config/xplr/plugins/dual-pane
   ```
 
 - Require the module in `~/.config/xplr/init.lua`
 
   ```lua
-  require("{plugin}").setup()
-  
+  require("dual-pane").setup()
+
   -- Or
-  
-  require("{plugin}").setup{
-    mode = "action",
-    key = ":",
+
+  require("dual-pane").setup{
+    active_pane_width = { Percentage = 70 }
+    inactive_pane_width = { Percentage = 30 }
   }
 
-  -- Type `::` and enjoy.
   ```
 
+## Usage
 
-Features
---------
+Press `ctrl-w` and then `h` or `left` to activate the left pane.
+Press `ctrl-w` and then `l` or `right` to activate the right pane.
+Press `ctrl-w` and then `0` to switch back to the default pane.
 
-- Some cool feature
+## Features
+
+- Retains focus and selection.
+- Retains sorters & filters.
