@@ -37,8 +37,10 @@ This plugin implements support for dual-pane navigation into xplr.
 ## Usage
 
 Press `ctrl-w` and then `h` or `left` to activate the left pane.
+
 Press `ctrl-w` and then `l` or `right` to activate the right pane.
-Press `ctrl-w` and then `0` to switch back to the default pane.
+
+Press `ctrl-w` and then `0` to switch back to the default layout.
 
 ## Features
 
