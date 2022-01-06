@@ -44,5 +44,5 @@ Press `ctrl-w` and then `0` to switch back to the default layout.
 
 ## Features
 
-- Retains focus and selection.
-- Retains sorters & filters.
+- Retains focus, sorters & filters.
+- Shares selection.
