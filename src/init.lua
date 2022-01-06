@@ -164,16 +164,30 @@ local function setup(args)
 
   xplr.fn.custom.dual_pane = {}
   xplr.fn.custom.dual_pane.render_inactive_pane = function(_)
+    local tree = xplr.config.general.table.tree
     if dual_pane == nil or dual_pane.inactive.directory_buffer == nil then
       return {}
     else
       local buf = dual_pane.inactive.directory_buffer
       local res = {
         buf.parent .. " (" .. buf.total .. ")",
-        " ",
+        "│",
       }
-      for _, node in ipairs(dual_pane.inactive.directory_buffer.nodes) do
-        table.insert(res, node.relative_path)
+      for i, node in ipairs(dual_pane.inactive.directory_buffer.nodes) do
+        local path = node.relative_path
+        if i == buf.total then
+          path = tree[3].format .. " " .. path
+        elseif i == 1 then
+          path = tree[1].format .. " " .. path
+        else
+          path = tree[2].format .. " " .. path
+        end
+
+        if node.is_dir then
+          path = path .. "/"
+        end
+
+        table.insert(res, path)
       end
       return res
     end

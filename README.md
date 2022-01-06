@@ -1,4 +1,4 @@
-[![dual-pane.gif](https://s10.gifyu.com/images/dual-pane.gif)](https://gifyu.com/image/SSyuk)
+[![dual-pane82c66cadbbfcf1fe.gif](https://s10.gifyu.com/images/dual-pane82c66cadbbfcf1fe.gif)](https://gifyu.com/image/SSy11)
 
 This plugin implements support for dual-pane navigation into xplr.
 
