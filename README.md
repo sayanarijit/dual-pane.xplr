@@ -17,7 +17,7 @@ This plugin implements support for dual-pane navigation into xplr.
   ```bash
   mkdir -p ~/.config/xplr/plugins
 
-  git clone https://github.com/me/dual-pane.xplr ~/.config/xplr/plugins/dual-pane
+  git clone https://github.com/sayanarijit/dual-pane.xplr ~/.config/xplr/plugins/dual-pane
   ```
 
 - Require the module in `~/.config/xplr/init.lua`
