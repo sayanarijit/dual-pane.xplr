@@ -75,8 +75,8 @@ local function activate_pane(pane_, layout, ctx)
     dual_pane = {
       active = pane_,
       inactive = {
-        directory_buffer = deepcopy(ctx.directory_buffer),
-        explorer_config = deepcopy(ctx.explorer_config),
+        directory_buffer = ctx.directory_buffer,
+        explorer_config = ctx.explorer_config,
       },
     }
     return { { SwitchLayoutCustom = layout } }
@@ -163,7 +163,7 @@ local function setup(args)
   )
 
   xplr.fn.custom.dual_pane = {}
-  xplr.fn.custom.dual_pane.render_inactive_pane = function(_)
+  xplr.fn.custom.dual_pane.render_inactive_pane = function(ctx)
     local tree = xplr.config.general.table.tree
     if dual_pane == nil or dual_pane.inactive.directory_buffer == nil then
       return {}
@@ -171,9 +171,15 @@ local function setup(args)
       local buf = dual_pane.inactive.directory_buffer
       local res = {
         buf.parent .. " (" .. buf.total .. ")",
-        "│",
       }
-      for i, node in ipairs(dual_pane.inactive.directory_buffer.nodes) do
+
+      local h = ctx.layout_size.height - 3
+      local start = (buf.focus - (buf.focus % h))
+      for i = start + 1, start + h, 1 do
+        if i > buf.total then
+          break
+        end
+        local node = dual_pane.inactive.directory_buffer.nodes[i]
         local path = node.relative_path
         if i == buf.total then
           path = tree[3].format .. " " .. path
