@@ -129,21 +129,45 @@ local function setup(args)
   on_key.h = {
     help = "left pane",
     messages = {
-      { CallLuaSilently = "custom.dual_pane.activate_left_pane" },
       "PopMode",
+      { CallLuaSilently = "custom.dual_pane.activate_left_pane" },
     },
   }
 
   on_key.l = {
     help = "right pane",
     messages = {
-      { CallLuaSilently = "custom.dual_pane.activate_right_pane" },
       "PopMode",
+      { CallLuaSilently = "custom.dual_pane.activate_right_pane" },
     },
   }
 
+  on_key.w = {
+    help = "toggle pane",
+    messages = {
+      "PopMode",
+      { CallLuaSilently = "custom.dual_pane.toggle_pane" },
+    },
+  }
+
+  on_key.q = {
+    help = "quit pane",
+    messages = {
+      "PopMode",
+      { CallLuaSilently = "custom.dual_pane.quit_active_pane" },
+    },
+  }
+
+  on_key["ctrl-h"] = on_key.h
+  on_key["ctrl-l"] = on_key.l
+  on_key["ctrl-w"] = on_key.w
+  on_key["ctrl-q"] = on_key.q
+
   on_key.left = on_key.h
+  on_key["ctrl-left"] = on_key.left
+
   on_key.right = on_key.l
+  on_key["ctrl-right"] = on_key.right
 
   local default_layout = xplr.config.layouts.builtin.default
   xplr.config.layouts.custom.left_pane_active = split_pane(
@@ -205,6 +229,27 @@ local function setup(args)
 
   xplr.fn.custom.dual_pane.activate_right_pane = function(ctx)
     return activate_pane(pane.RIGHT, "right_pane_active", ctx)
+  end
+
+  xplr.fn.custom.dual_pane.toggle_pane = function(ctx)
+    if dual_pane and dual_pane.active == pane.RIGHT then
+      return xplr.fn.custom.dual_pane.activate_left_pane(ctx)
+    else
+      return xplr.fn.custom.dual_pane.activate_right_pane(ctx)
+    end
+  end
+
+  xplr.fn.custom.dual_pane.quit_active_pane = function(ctx)
+    if dual_pane then
+      local msgs = xplr.fn.custom.dual_pane.toggle_pane(ctx)
+      table.insert(msgs, { SwitchLayoutBuiltin = "default" })
+      dual_pane = nil
+      return msgs
+    else
+      return {
+        { SwitchModeBuiltin = "quit" },
+      }
+    end
   end
 end
 
