@@ -206,11 +206,11 @@ local function setup(args)
         local node = dual_pane.inactive.directory_buffer.nodes[i]
         local path = node.relative_path
         if i == buf.total then
-          path = tree[3].format .. " " .. path
+          path = (tree[3].format or "") .. " " .. path
         elseif i == 1 then
-          path = tree[1].format .. " " .. path
+          path = (tree[1].format or "") .. " " .. path
         else
-          path = tree[2].format .. " " .. path
+          path = (tree[2].format or "") .. " " .. path
         end
 
         if node.is_dir then
