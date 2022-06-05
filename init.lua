@@ -70,7 +70,12 @@ local function split_pane(
   end
 end
 
-local function activate_pane(pane_, layout, ctx)
+local function activate_pane(pane_, ctx)
+  local layout = "right_pane_active"
+  if pane_ == pane.LEFT then
+    layout = "left_pane_active"
+  end
+
   if dual_pane == nil then
     dual_pane = {
       active = pane_,
@@ -98,17 +103,11 @@ local function activate_pane(pane_, layout, ctx)
     }
 
     for _, v in ipairs(filters) do
-      table.insert(
-        msgs,
-        { AddNodeFilter = { filter = v.filter, input = v.input } }
-      )
+      table.insert(msgs, { AddNodeFilter = { filter = v.filter, input = v.input } })
     end
 
     for _, v in ipairs(sorters) do
-      table.insert(
-        msgs,
-        { AddNodeSorter = { sorter = v.sorter, reverse = v.reverse } }
-      )
+      table.insert(msgs, { AddNodeSorter = { sorter = v.sorter, reverse = v.reverse } })
     end
 
     table.insert(msgs, { ChangeDirectory = pwd })
@@ -169,6 +168,10 @@ local function setup(args)
   on_key.right = on_key.l
   on_key["ctrl-right"] = on_key.right
 
+  -- Also overwrite the default quit function
+
+  xplr.config.modes.builtin.default.key_bindings.on_key.q = on_key.q
+
   local default_layout = xplr.config.layouts.builtin.default
   xplr.config.layouts.custom.left_pane_active = split_pane(
     default_layout,
@@ -224,11 +227,11 @@ local function setup(args)
   end
 
   xplr.fn.custom.dual_pane.activate_left_pane = function(ctx)
-    return activate_pane(pane.LEFT, "left_pane_active", ctx)
+    return activate_pane(pane.LEFT, ctx)
   end
 
   xplr.fn.custom.dual_pane.activate_right_pane = function(ctx)
-    return activate_pane(pane.RIGHT, "right_pane_active", ctx)
+    return activate_pane(pane.RIGHT, ctx)
   end
 
   xplr.fn.custom.dual_pane.toggle_pane = function(ctx)
@@ -247,7 +250,7 @@ local function setup(args)
       return msgs
     else
       return {
-        { SwitchModeBuiltin = "quit" },
+        "Quit",
       }
     end
   end
