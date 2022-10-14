@@ -53,3 +53,8 @@ Press `ctrl-w` and then `q` / `ctrl-q` to quit active pane.
 
 - Retains focus, sorters & filters.
 - Shares selection.
+
+# Also See
+
+- [zentable.xplr](https://github.com/sayanarijit/zentable.xplr)
+- [tri-pane.xplr](https://github.com/sayanarijit/tri-pane.xplr)
