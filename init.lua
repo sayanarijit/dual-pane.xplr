@@ -126,14 +126,14 @@ local function render_inactive_pane(ctx)
 
   local visible = offset(nodes, ctx.layout_size.height, focus)
   for ni, node in ipairs(visible) do
-    index = ni - 1
+    local index = ni - 1
     ni = ni + 1
     local tree = xplr.config.general.table.tree
-    local t = tree[2].format or "├"
+    local t = tree[2].format or ""
     if index == 0 then
-      t = tree[1].format or "╭"
+      t = tree[1].format or ""
     elseif index == total - 1 then
-      t = tree[3].format or "╰"
+      t = tree[3].format or ""
     end
 
     local ui = xplr.config.general.default_ui
