@@ -42,7 +42,7 @@ local function offset(listing, height, focus)
   for i = start + 1, start + h, 1 do
     table.insert(result, listing[i])
   end
-  return result
+  return result, start
 end
 
 local function activate_pane(pane_, app)
@@ -124,9 +124,9 @@ local function render_inactive_pane(ctx)
     is_selected[v.absolute_path] = true
   end
 
-  local visible = offset(nodes, ctx.layout_size.height, focus)
+  local visible, start = offset(nodes, ctx.layout_size.height, focus)
   for ni, node in ipairs(visible) do
-    local index = ni - 1
+    local index = start + ni - 1
     ni = ni + 1
     local tree = xplr.config.general.table.tree
     local t = tree[2].format or ""
