@@ -287,6 +287,4 @@ local function setup(args)
   end
 end
 
--- return { setup = setup }
-version = "0.21.1"
-setup()
+return { setup = setup }
