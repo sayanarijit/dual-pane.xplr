@@ -56,5 +56,6 @@ Press `ctrl-w` and then `q` / `ctrl-q` to quit active pane.
 
 # Also See
 
+- [tree-view.xplr](https://github.com/sayanarijit/tree-view.xplr)
 - [zentable.xplr](https://github.com/sayanarijit/zentable.xplr)
 - [tri-pane.xplr](https://github.com/sayanarijit/tri-pane.xplr)
