@@ -83,16 +83,35 @@ local function activate_pane(pane_, app)
   end
 end
 
-local function to_col_renderer_arg(node, index, focus, total, is_selected, ui, tree)
+local function to_col_renderer_arg(node, index, focus, total, is_selected)
+  local tree = xplr.config.general.table.tree
+  local t = tree[2].format
+  if index == 0 then
+    t = tree[1].format
+  elseif index == total - 1 then
+    t = tree[3].format
+  end
+
+  local is_focused = index == focus
+
+  local ui = xplr.config.general.default_ui
+  if is_focused and is_selected then
+    ui = xplr.config.general.focus_selection_ui
+  elseif is_focused then
+    ui = xplr.config.general.focus_ui
+  elseif is_selected then
+    ui = xplr.config.general.selection_ui
+  end
+
   node.index = index
   node.relative_index = math.abs(index - focus)
   node.is_before_focus = index < focus
   node.is_after_focus = index > focus
-  node.tree = tree
+  node.tree = t or ""
   node.prefix = ui.prefix or ""
   node.suffix = ui.suffix or ""
   node.is_selected = is_selected
-  node.is_focused = index == focus
+  node.is_focused = is_focused
   node.total = total
   node.style = ui.style
   node.meta = {}
@@ -128,31 +147,13 @@ local function render_inactive_pane(ctx)
   for ni, node in ipairs(visible) do
     local index = start + ni - 1
     ni = ni + 1
-    local tree = xplr.config.general.table.tree
-    local t = tree[2].format or ""
-    if index == 0 then
-      t = tree[1].format or ""
-    elseif index == total - 1 then
-      t = tree[3].format or ""
-    end
-
-    local ui = xplr.config.general.default_ui
-    if node.is_focused and node.is_selected then
-      ui = xplr.config.general.focus_selection_ui
-    elseif node.is_focused then
-      ui = xplr.config.general.focus_ui
-    elseif node.is_selected then
-      ui = xplr.config.general.selection_ui
-    end
 
     local arg = to_col_renderer_arg(
       node,
       index,
       focus,
       total,
-      is_selected[node.absolute_path] or false,
-      ui,
-      t
+      is_selected[node.absolute_path] or false
     )
     body[ni] = {}
     for ci, col in ipairs(cols) do
